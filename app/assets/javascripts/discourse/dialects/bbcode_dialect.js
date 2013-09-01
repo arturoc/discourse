@@ -146,10 +146,15 @@ Discourse.Dialect.on("register", function(event) {
   dialect.block['quote'] = function bbcodeQuote(block, next) {
     var m = new RegExp("\\[quote=?([^\\[\\]]+)?\\]([\\s\\S]*)", "igm").exec(block);
     if (m) {
-      var paramsString = m[1].replace(/\"/g, ''),
-          params = {'class': 'quote'},
-          paramsSplit = paramsString.split(/\, */),
-          username = paramsSplit[0],
+      var paramsString="",
+            paramsSplit="",
+            username = "";
+      if(m[1]!=undefined){
+        paramsString = m[1].replace(/\"/g, ''),
+        paramsSplit = paramsString.split(/\, */),
+        username = paramsSplit[0];
+      }
+      var params = {'class': 'quote'},
           opts = dialect.options,
           startPos = block.indexOf(m[0]),
           leading,
@@ -167,14 +172,16 @@ Discourse.Dialect.on("register", function(event) {
         result.push(para);
       }
 
-      paramsSplit.forEach(function(p,i) {
-        if (i > 0) {
-          var assignment = p.split(':');
-          if (assignment[0] && assignment[1]) {
-            params['data-' + assignment[0]] = assignment[1].trim();
-          }
-        }
-      });
+      if(m[1]!=undefined){
+          paramsSplit.forEach(function(p,i) {
+            if (i > 0) {
+              var assignment = p.split(':');
+              if (assignment[0] && assignment[1]) {
+                params['data-' + assignment[0]] = assignment[1].trim();
+              }
+            }
+          });
+      }
 
       var avatarImg;
       if (opts.lookupAvatarByPostNumber) {
