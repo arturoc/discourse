@@ -268,7 +268,14 @@ Add the following lines:
     # Disabled for now - log rotation isn't *quite* complete
     #0 0 * * * /usr/sbin/logrotate /var/www/discourse/config/logrotate.conf
 
+## Email setup
+
+IMPORTANT: Discourse relies heavily on email. If your email configuration is not correct, you will effectively have a broken forum.
+Please, head over to our [Mail Setup Guide](https://github.com/discourse/discourse/blob/master/docs/INSTALL-email.md) to find out more information on how to properly setup emails.
+
 Congratulations! You've got Discourse installed and running!
+
+## Administrator account
 
 Now make yourself an administrator account. Browse to your discourse instance
 and create an account by logging in normally, then run the commands:
@@ -286,7 +293,7 @@ and create an account by logging in normally, then run the commands:
 
     # Mark yourself as the 'system user':
     # (in rails console)
-    > SiteSetting.system_username = me.username
+    > SiteSetting.site_contact_username = me.username
 
 At this point we recommend you start going through the various items in the
 [Discourse Admin Quick Start Guide](https://github.com/discourse/discourse/wiki/The-Discourse-Admin-Quick-Start-Guide)

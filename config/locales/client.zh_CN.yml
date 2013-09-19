@@ -71,7 +71,7 @@ zh_CN:
           other: "%{count}天前"
     share:
       topic: '分享一个到本主题的链接'
-      post: '分享一个到本帖的链接'
+      post: '分享一个到#%{postNumber}帖的链接'
       close: '关闭'
       twitter: '分享这个链接到 Twitter'
       facebook: '分享这个链接到 Facebook'
@@ -94,6 +94,8 @@ zh_CN:
     links: 链接
     faq: "常见问答（FAQ）"
     privacy_policy: "隐私政策"
+    mobile_view: "移动视图"
+    desktop_view: "桌面视图"
     you: "你"
     or: "或"
     now: "刚刚"
@@ -188,7 +190,6 @@ zh_CN:
       download_archive: "下载我的帖子的存档"
       private_message: "私信"
       private_messages: "消息"
-      private_messages_sent: "已发送消息"
       activity_stream: "活动"
       preferences: "设置"
       bio: "关于我"
@@ -201,6 +202,12 @@ zh_CN:
       change: "修改"
       moderator: "{{user}} 是版主"
       admin: "{{user}} 是管理员"
+      deleted: "（已删除）"
+      
+      messages:
+        all: "所有"
+        mine: "我的"
+        unread: "未读"
 
       change_password:
         success: "（电子邮件已发送）"
@@ -396,6 +403,7 @@ zh_CN:
       authenticating: "验证中……"
       awaiting_confirmation: "你的帐号尚未激活，点击忘记密码链接来重新发送激活邮件。"
       awaiting_approval: "你的帐号尚未被论坛版主批准。一旦你的帐号获得批准，你会收到一封电子邮件。"
+      requires_invite: "抱歉，本论坛仅接受邀请注册。"
       not_activated: "你还不能登录。我们之前在<b>{{sentTo}}</b>发送了一封激活邮件给你。请按照邮件中的介绍来激活你的帐号。"
       resend_activation_email: "点击此处来重新发送激活邮件。"
       sent_activation_email_again: "我们在<b>{{currentEmail}}</b>又发送了一封激活邮件给你，邮件送达可能需要几分钟，有的电子邮箱服务商可能会认为此邮件为垃圾邮件，请检查一下你邮箱的垃圾邮件文件夹。"
@@ -503,7 +511,7 @@ zh_CN:
       private_message: "<i class='icon icon-envelope-alt' title='私信'></i> {{username}} 发送给你一条私信：{{link}}"
       invited_to_private_message: "{{username}} 邀请你进行私下交流：{{link}}"
       invitee_accepted: "<i title='已接受你的邀请' class='icon icon-signin'></i> {{username}} 已接受你的邀请"
-      moved_post: "<i title='移动帖子' class='icon icon-arrow-right'></i> {{username}} 已将帖子移动到 {{link}}"
+      moved_post: "<i title='移动帖子' class='icon icon-arrow-right'></i> {{username}} 移动了该帖： {{link}}"
       total_flagged: "被报告帖子的总数"
 
     upload_selector:
@@ -757,6 +765,7 @@ zh_CN:
       multi_select:
         select: '选择'
         selected: '已选择（{{count}}）'
+        select_replies: '选择并回复'
         delete: 删除所选
         cancel: 取消选择
         description:
@@ -809,6 +818,12 @@ zh_CN:
         undelete: "恢复本帖"
         share: "分享一个到本帖的链接"
         more: "更多"
+        delete_replies:
+          confirm:
+            one: "是否同时删除该帖的1条回复？"
+            other: "是否同时删除该帖的{{count}}条回复？"
+          yes_value: "是，删除回复"
+          no_value: "否，仅删除该帖"
 
       actions:
         flag: '报告'
@@ -912,7 +927,7 @@ zh_CN:
           other: "你确定要删除这些帖子吗？"
 
     category:
-      can: 'can&hellip; '
+      can: '能够'
       none: '（未分类）'
       edit: '编辑'
       edit_long: "编辑分类"

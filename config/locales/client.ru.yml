@@ -13,7 +13,7 @@ ru:
     number:
       human:
         storage_units:
-          format: 0
+          format: "0"
           units:
             byte:
               one: Байт
@@ -106,7 +106,7 @@ ru:
           many: '%{count} дней назад'
     share:
       topic: поделиться ссылкой на тему
-      post: поделиться ссылкой на сообщение
+      post: 'ссылка на сообщение #%{postNumber}'
       close: закрыть
       twitter: поделиться ссылкой через Twitter
       facebook: поделиться ссылкой через Facebook
@@ -128,6 +128,8 @@ ru:
     links: Ссылки
     faq: FAQ
     privacy_policy: Политика конфиденциальности
+    mobile_view: Для мобильных устройств
+    desktop_view: Для настольных устройств
     you: Вы
     or: или
     now: только что
@@ -220,7 +222,6 @@ ru:
       download_archive: скачать архив ваших сообщений
       private_message: Личное сообщение
       private_messages: Личные сообщения
-      private_messages_sent: Отправленные сообщения
       activity_stream: Активность
       preferences: Настройки
       bio: Обо мне
@@ -233,6 +234,11 @@ ru:
       change: изменить
       moderator: '{{user}} - модератор'
       admin: '{{user}} - админ'
+      deleted: (удален)
+      messages:
+        all: Все
+        mine: Мои
+        unread: Непрочитанные
       change_password:
         success: (письмо отправлено)
         in_progress: (отправка письма)
@@ -258,6 +264,7 @@ ru:
         uploaded_avatar: Собственный аватар
         uploaded_avatar_empty: Добавить собственный аватар
         upload_title: Загрузка собственного аватара
+        image_is_not_a_square: 'Внимание: изображение было кадрировано, т.к. оно не квадратное.'
       email:
         title: Email
         instructions: Ваш адрес электронной почты всегда скрыт.
@@ -407,6 +414,7 @@ ru:
       authenticating: Проверка...
       awaiting_confirmation: Ваша учетная запись требует активации. Для того чтобы получить активационное письмо повторно, воспользуйтесь опцией сброса пароля.
       awaiting_approval: Ваша учетная запись еще не одобрена. Вы получите письмо, когда это случится.
+      requires_invite: К сожалению, доступ к форуму только по приглашениям.
       not_activated: 'Прежде чем вы сможете воспользоваться новой учетной записью, вам необходимо ее активировать. Мы отправили вам на почту <b>{{sentTo}}</b> подробные инструкции, как это cделать.'
       resend_activation_email: Щелкните здесь, чтобы мы повторно выслали вам письмо для активации учетной записи.
       sent_activation_email_again: 'По адресу <b>{{currentEmail}}</b> повторно отправлено письмо с кодом активации. Доставка сообщения может занять несколько минут. Имейте в виду, что иногда по ошибке письмо может попасть в папку Спам.'
@@ -463,8 +471,8 @@ ru:
       saved: Сохранено!
       saved_draft: Вы в данный момент создаете сообщение. Нажмите в любом месте, чтобы вернуться к редактированию.
       uploading: Загрузка...
-      show_preview: предпросмотр &raquo;
-      hide_preview: "&laquo; скрыть предпросмотр"
+      show_preview: 'предпросмотр &raquo;'
+      hide_preview: '&laquo; скрыть предпросмотр'
       quote_post_title: Процитировать всё сообщение
       bold_title: Выделение жирным
       bold_text: текст, выделенный жирным
@@ -506,7 +514,7 @@ ru:
       private_message: "<i class='icon icon-envelope-alt' title='private message'></i> {{username}} {{link}}"
       invited_to_private_message: "<i class='icon icon-envelope-alt' title='private message'></i> {{username}} {{link}}"
       invitee_accepted: "<i title='принятое приглашение' class='icon icon-signin'></i> {{username}} принял ваше приглашение"
-      moved_post: "<i title='перенесенное сообщение' class='icon icon-arrow-right'></i> {{username}} перенес сообщение в {{link}}"
+      moved_post: "<i title='moved post' class='icon icon-arrow-right'></i> {{username}} переместил сообщение в {{link}}"
       total_flagged: всего сообщений с жалобами
     upload_selector:
       title: Загрузить изображение
@@ -735,6 +743,7 @@ ru:
       multi_select:
         select: выбрать
         selected: 'выбрано ({{count}})'
+        select_replies: выбрать +ответы
         delete: удалить выбранные
         cancel: отменить выделение
         description:
@@ -787,6 +796,14 @@ ru:
         undelete: отменить удаление
         share: поделиться ссылкой на сообщение
         more: Ещё
+        delete_replies:
+          confirm:
+            one: Хотите так же удалить ответ на данное сообщение?
+            other: 'Хотите так же удалить {{count}} ответов на данное сообщение?'
+            few: 'Хотите так же удалить {{count}} ответа на данное сообщение?'
+            many: 'Хотите так же удалить {{count}} ответов на данное сообщение?'
+          yes_value: Да, так же удалить ответы
+          no_value: Нет, удалить только сообщение
       actions:
         flag: Жалоба
         clear_flags:
@@ -924,7 +941,7 @@ ru:
           few: Вы уверены, что хотите удалить сообщения?
           many: Вы уверены, что хотите удалить сообщения?
     category:
-      can: может&hellip;
+      can: 'может&hellip; '
       none: (без категории)
       edit: изменить
       edit_long: Изменить категорию
@@ -1320,13 +1337,11 @@ ru:
         approve: Одобрить
         approved_by: Одобрено
         approve_success: |
-          Пользователь одобрен, на его электронную почту послано письмо с инструкцией
-          по активации.
-
+                    Пользователь одобрен, на его электронную почту послано письмо с инструкцией
+                    по активации.
         approve_bulk_success: |
-          Успех! Все выбранные пользователи одобрены
-          и уведомлены.
-
+                    Успех! Все выбранные пользователи одобрены
+                    и уведомлены.
         time_read: Время чтения
         delete: Удалить пользователя
         delete_forbidden:
@@ -1339,11 +1354,10 @@ ru:
         delete_dont_block: '<b>Да</b>, но <b>разрешить</b> повторную регистрацию с данного адреса'
         deleted: Пользователь удален.
         delete_failed: При удалении пользователя возникла ошибка. Для удаления пользователя необходимо сначала удалить все его сообщения.
-        send_activation_email: Послать активационное письмо
+        send_activation_email: 'Послать активационное письмо '
         activation_email_sent: Активационное письмо отправлено.
         send_activation_email_failed: |
-          К сожалению, возникла ошибка при повторной отправке сообщения для активации %{error}
-
+                    К сожалению, возникла ошибка при повторной отправке сообщения для активации %{error}
         activate: Активировать
         activate_failed: Во время активации пользователя произошла ошибка.
         deactivate_account: Деактивировать
