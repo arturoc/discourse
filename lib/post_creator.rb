@@ -7,10 +7,6 @@ class PostCreator
 
   attr_reader :errors, :opts
 
-  def self.create(user,opts)
-    self.new(user,opts).create
-  end
-
   # Acceptable options:
   #
   #   raw                     - raw text of post
@@ -80,11 +76,16 @@ class PostCreator
                            { user: @user,
                              limit_once_per: 24.hours,
                              message_params: {domains: @post.linked_hosts.keys.join(', ')} } )
+    elsif @post && !@post.errors.present?
+      SpamRulesEnforcer.enforce!(@post)
     end
+
+    track_latest_on_category
 
     enqueue_jobs
     @post
   end
+
 
   def self.create(user, opts)
     PostCreator.new(user, opts).create
@@ -108,6 +109,15 @@ class PostCreator
 
 
   protected
+
+  def track_latest_on_category
+    if @post && @post.errors.count == 0 && @topic && @topic.category_id
+      Category.update_all( {latest_post_id: @post.id}, {id: @topic.category_id} )
+      if @post.post_number == 1
+        Category.update_all( {latest_topic_id: @topic.id}, {id: @topic.category_id} )
+      end
+    end
+  end
 
   def ensure_in_allowed_users
     return unless @topic.private_message?
@@ -236,7 +246,8 @@ class PostCreator
   def update_user_counts
     # We don't count replies to your own topics
     if @user.id != @topic.user_id
-      @user.update_topic_reply_count
+      @user.user_stat.update_topic_reply_count
+      @user.user_stat.save!
     end
 
     @user.last_posted_at = @post.created_at

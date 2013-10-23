@@ -44,6 +44,17 @@ describe PostCreator do
 
     end
 
+    context "invalid raw" do
+
+      let(:creator_invalid_raw) { PostCreator.new(user, basic_topic_params.merge(raw: '')) }
+
+      it "has errors" do
+        creator_invalid_raw.create
+        expect(creator_invalid_raw.errors).to be_present
+      end
+
+    end
+
     context "success" do
 
       it "doesn't return true for spam" do
@@ -163,12 +174,15 @@ describe PostCreator do
         topic_user.seen_post_count.should == first_post.post_number
 
         user2 = Fabricate(:coding_horror)
-        user2.topic_reply_count.should == 0
-        first_post.user.reload.topic_reply_count.should == 0
+        user2.user_stat.topic_reply_count.should == 0
+
+        first_post.user.user_stat.reload.topic_reply_count.should == 0
 
         PostCreator.new(user2, topic_id: first_post.topic_id, raw: "this is my test post 123").create
-        user2.reload.topic_reply_count.should == 1
-        first_post.user.reload.topic_reply_count.should == 0
+
+        first_post.user.user_stat.reload.topic_reply_count.should == 0
+
+        user2.user_stat.reload.topic_reply_count.should == 1
       end
     end
 
